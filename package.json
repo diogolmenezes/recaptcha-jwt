@@ -1,21 +1,29 @@
 {
   "name": "recaptcha-jwt",
+  "keywords": [
+    "recaptcha",
+    "jwt"
+  ],
+  "tags": [
+    "recaptcha",
+    "jwt"
+  ],
   "version": "1.0.0",
   "description": "Validate recaptcha and returns jwt token",
   "author": "Diogo Menezes <diogolmenezes@gmail.com>",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/diogolmenezes/recaptcha_jwt.git"
+    "url": "git+https://github.com/diogolmenezes/recaptcha-jwt.git"
   },
    "bugs": {
-    "url": "https://github.com/diogolmenezes/recaptcha_jwt/issues"
+    "url": "https://github.com/diogolmenezes/recaptcha-jwt/issues"
   },
-  "homepage": "https://github.com/diogolmenezes/recaptcha_jwt#readme",
+  "homepage": "https://github.com/diogolmenezes/recaptcha-jwt#readme",
   "main": "index.js",
   "scripts": {
     "test": "clear;node_modules/mocha/bin/mocha -R spec --timeout 5000 "
   },
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "jsonwebtoken": "^7.3.0",
     "request": "^2.81.0"
