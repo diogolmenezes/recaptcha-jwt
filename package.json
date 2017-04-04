@@ -8,7 +8,7 @@
     "recaptcha",
     "jwt"
   ],
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Validate recaptcha and returns jwt token",
   "author": "Diogo Menezes <diogolmenezes@gmail.com>",
   "repository": {
