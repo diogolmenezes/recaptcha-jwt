@@ -30,7 +30,7 @@ describe('Recaptcha JWT', () => {
     describe('Captcha', () => {
 
         it('Must always validate captcha with mock: true option', done => {
-            var r = new RecaptchaJwt({ recaptcha: { secret: '123' }, jwt: { secret: '123' }, mock: true });
+            var r = new RecaptchaJwt({ recaptcha: { secret: '123', mock: true }, jwt: { secret: '123', mock: true } });
 
             r.validateCaptcha('some_invalid_captcha')
                 .then(result => {
@@ -52,7 +52,7 @@ describe('Recaptcha JWT', () => {
     describe('JWT', () => {
 
         it('Must always validate jwt with mock: true option', done => {
-            var r = new RecaptchaJwt({ recaptcha: { secret: '123' }, jwt: { secret: '123' }, mock: true });
+            var r = new RecaptchaJwt({ recaptcha: { secret: '123', mock: true }, jwt: { secret: '123', mock: true } });
 
             r.validateJwt('some_invalid_jwt')
                 .then(result => {
