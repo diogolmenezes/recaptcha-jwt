@@ -19,9 +19,10 @@ var r = new RecaptchaJwt({ recaptcha: { secret: '123' }, jwt: { secret: '123' } 
 
 - recaptcha.secret: Recaptcha secret, required
 - recaptcha.ssl: Sll true or false
+- recaptcha.mock: Enable mock mode, always validate the token.
 - jwt.secret: Jwt secret, required
 - jwt.expiresIn: Expiration. Default 600 seconds.
-- mock: Enable mock mode, always validate the token.
+- jwt.mock: Enable mock mode, always validate the token.
 
 
 # Validates a recaptcha and gets jwt token 
