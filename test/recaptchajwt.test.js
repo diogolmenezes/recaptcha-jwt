@@ -90,6 +90,31 @@ describe('Recaptcha JWT', () => {
                     done();
                 })
         });
+
+        it('Must validate non expirated tokens', done => {
+            var r = new RecaptchaJwt({ recaptcha: { secret: '123' }, jwt: { secret: '123', expiresIn: 10 } });
+            var jwt = r._getJwt('some_captcha');
+
+            setTimeout(() => {
+                r.validateJwt(jwt)
+                    .then(() => {
+                        done();
+                    })
+            }, 1000);
+        });
+
+        it('Must not validate expirated tokens', done => {
+            var r = new RecaptchaJwt({ recaptcha: { secret: '123' }, jwt: { secret: '123', expiresIn: 1 } });
+            var jwt = r._getJwt('some_captcha');
+
+            // Aguarda mais que o tempo do token para realizar o teste
+            setTimeout(() => {
+                r.validateJwt(jwt)
+                    .catch(error => {
+                        done();
+                    })
+            }, 1200);
+        });
     });
 
 });
