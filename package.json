@@ -15,7 +15,7 @@
     "type": "git",
     "url": "git+https://github.com/diogolmenezes/recaptcha-jwt.git"
   },
-   "bugs": {
+  "bugs": {
     "url": "https://github.com/diogolmenezes/recaptcha-jwt/issues"
   },
   "homepage": "https://github.com/diogolmenezes/recaptcha-jwt#readme",
@@ -26,6 +26,7 @@
   "license": "MIT",
   "dependencies": {
     "jsonwebtoken": "^7.3.0",
+    "merge-options": "0.0.64",
     "request": "^2.81.0"
   },
   "devDependencies": {

@@ -25,6 +25,18 @@ describe('Recaptcha JWT', () => {
 
             done();
         });
+
+        it('Must have expiresIn', done => {
+            var r = new RecaptchaJwt({ recaptcha: { secret: '123' }, jwt: { secret: '123' } });
+            expect(r.config.jwt.expiresIn).to.be.equals(600);
+            done();
+        });
+
+        it('Must have defined expiresIn', done => {
+            var r = new RecaptchaJwt({ recaptcha: { secret: '123' }, jwt: { secret: '123', expiresIn: 42 } });
+            expect(r.config.jwt.expiresIn).to.be.equals(42);
+            done();
+        });
     });
 
     describe('Captcha', () => {
@@ -78,7 +90,6 @@ describe('Recaptcha JWT', () => {
                     done();
                 })
         });
-
     });
 
 });
