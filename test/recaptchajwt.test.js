@@ -115,6 +115,82 @@ describe('Recaptcha JWT', () => {
                     })
             }, 1200);
         });
+
+        it('Must get JWT content', done => {
+            var r = new RecaptchaJwt({ recaptcha: { secret: '123' }, jwt: { secret: '123' } });
+            var jwt = r._getJwt('some_captcha');
+
+            r.getJwtContent(jwt)
+                .then(result => {
+                    expect(result == 'some_captcha');
+                    done();
+                })
+        })
     });
 
+    describe('JWT Content', () => {
+
+        it('Must always validate jwt with mock: true option', done => {
+            var r = new RecaptchaJwt({ recaptcha: { secret: '123', mock: true }, jwt: { secret: '123', mock: true } });
+
+            r.validateJwtAndContent('some_invalid_jwt', 'some_value')
+                .then(result => {
+                    done();
+                })
+        });
+
+        it('Must invalidate invalid jwts', done => {
+            var r = new RecaptchaJwt({ recaptcha: { secret: '123' }, jwt: { secret: '123' } });
+
+            r.validateJwtAndContent('some_invalid_jwt', 'some_value')
+                .catch(result => {
+                    done();
+                })
+        });
+
+        it('Must validate valid jwts and content', done => {
+            var r = new RecaptchaJwt({ recaptcha: { secret: '123' }, jwt: { secret: '123' } });
+            var jwt = r._getJwt('some_value');
+
+            r.validateJwtAndContent(jwt, 'some_value')
+                .then(result => {
+                    done();
+                });
+        });
+
+        it('Must validate non expirated tokens', done => {
+            var r = new RecaptchaJwt({ recaptcha: { secret: '123' }, jwt: { secret: '123', expiresIn: 10 } });
+            var jwt = r._getJwt('some_value');
+
+            setTimeout(() => {
+                r.validateJwtAndContent(jwt, 'some_value')
+                    .then(() => {
+                        done();
+                    })
+            }, 1000);
+        });
+
+        it('Must not validate expirated tokens', done => {
+            var r = new RecaptchaJwt({ recaptcha: { secret: '123' }, jwt: { secret: '123', expiresIn: 1 } });
+            var jwt = r._getJwt('some_value');
+
+            // Aguarda mais que o tempo do token para realizar o teste
+            setTimeout(() => {
+                r.validateJwtAndContent(jwt, 'some_value')
+                    .catch(error => {
+                        done();
+                    })
+            }, 1200);
+        });
+
+        it('Must not validate with invalid content', done => {
+            var r = new RecaptchaJwt({ recaptcha: { secret: '123' }, jwt: { secret: '123' } });
+            var jwt = r._getJwt('some_value');
+
+            r.validateJwtAndContent(jwt, 'some_invalid_value')
+                .catch(result => {
+                    done();
+                })
+        })
+    });
 });
