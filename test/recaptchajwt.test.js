@@ -120,7 +120,7 @@ describe('Recaptcha JWT', () => {
             var r = new RecaptchaJwt({ recaptcha: { secret: '123' }, jwt: { secret: '123' } });
             var jwt = r._getJwt('some_captcha');
 
-            r.getJwtContent(jwt)
+            r.validateAndGetContent(jwt)
                 .then(result => {
                     expect(result == 'some_captcha');
                     done();
