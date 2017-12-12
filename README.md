@@ -25,7 +25,7 @@ var r = new RecaptchaJwt({ recaptcha: { secret: '123' }, jwt: { secret: '123' } 
 - jwt.mock: Enable mock mode, always validate the token.
 
 
-# Validates a recaptcha and gets jwt token 
+# Validate recaptcha and get jwt token
 
 ```javascript
 var RecaptchaJwt = require('recaptcha-jwt');
@@ -38,7 +38,7 @@ r.validateCaptcha('some_captcha')
                 });
 ```
 
-# Validates a recaptcha and gets jwt token 
+# Validate JWT token
 
 ```javascript
 var RecaptchaJwt = require('recaptcha-jwt');
@@ -46,7 +46,33 @@ var RecaptchaJwt = require('recaptcha-jwt');
 var r = new RecaptchaJwt({ recaptcha: { secret: '123' }, jwt: { secret: '123' } });
 
 r.validateJwt('some_jwt')
-                .then(result => {
-                    console.log(result);
+                .then(content => {
+                    console.log(content);
+                });
+```
+
+# Validate JWT token and content
+
+```javascript
+var RecaptchaJwt = require('recaptcha-jwt');
+
+var r = new RecaptchaJwt({ recaptcha: { secret: '123' }, jwt: { secret: '123' } });
+
+r.validateJwtAndContent('some_jwt', 'some_content')
+                .then(content => {
+                    console.log(content);
+                });
+```
+
+# Create JWT
+
+```javascript
+var RecaptchaJwt = require('recaptcha-jwt');
+
+var r = new RecaptchaJwt({ recaptcha: { secret: '123' }, jwt: { secret: '123' } });
+
+r.getJwt('some_content')
+                .then(jwt => {
+                    console.log(jwt);
                 });
 ```
