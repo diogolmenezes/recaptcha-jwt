@@ -1,4 +1,4 @@
-const expect = require('chai').expect;
+// const expect = require('chai').expect;
 const RecaptchaJwt = require('../lib/recaptchaJwt');
 const InvalidContentError = require('../lib/error/invalidContentError');
 const { JsonWebTokenError, TokenExpiredError } = require('jsonwebtoken');
@@ -6,38 +6,32 @@ const { JsonWebTokenError, TokenExpiredError } = require('jsonwebtoken');
 describe('Recaptcha JWT', () => {
 
     describe('Constructor', () => {
-        it('Must not contruct without set JWT secret', done => {
+        it('Must not contruct without set JWT secret', () => {
 
             let create = function () {
                 new RecaptchaJwt({ recaptcha: { secret: '6Lf-GhoUAAAAAN6ROO0i6UVfJFcZjCD01Ykvmatr' } });
             };
 
-            expect(create).to.throw(Error, "RecaptchaJwt => You must set jwt: { secret: '' } option to RecaptchaJwt contructor.");
-
-            done();
+            expect(create).toThrow(Error, "RecaptchaJwt => You must set jwt: { secret: '' } option to RecaptchaJwt contructor.");
         });
 
-        it('Must not contruct without set recaptcha secret', done => {
+        it('Must not contruct without set recaptcha secret', () => {
 
             let create = function () {
                 new RecaptchaJwt({ jwt: { secret: '123' } });
             };
 
-            expect(create).to.throw(Error, "RecaptchaJwt => You must set recaptcha: { secret: '' } option to RecaptchaJwt contructor.");
-
-            done();
+            expect(create).toThrow(Error, "RecaptchaJwt => You must set recaptcha: { secret: '' } option to RecaptchaJwt contructor.");
         });
 
-        it('Must have expiresIn', done => {
+        it('Must have expiresIn', () => {
             let r = new RecaptchaJwt({ recaptcha: { secret: '123' }, jwt: { secret: '123' } });
-            expect(r.config.jwt.expiresIn).to.be.equals(600);
-            done();
+            expect(r.config.jwt.expiresIn).toBe(600);
         });
 
-        it('Must have defined expiresIn', done => {
+        it('Must have defined expiresIn', () => {
             let r = new RecaptchaJwt({ recaptcha: { secret: '123' }, jwt: { secret: '123', expiresIn: 42 } });
-            expect(r.config.jwt.expiresIn).to.be.equals(42);
-            done();
+            expect(r.config.jwt.expiresIn).toBe(42);
         });
     });
 
@@ -74,13 +68,12 @@ describe('Recaptcha JWT', () => {
                 });
         });
 
-        it('Must invalidate invalid jwts', done => {
+        it('Must invalidate invalid jwts', () => {
             let r = new RecaptchaJwt({ recaptcha: { secret: '123' }, jwt: { secret: '123' } });
 
             r.validateJwt('some_invalid_jwt')
                 .catch(error => {
-                    expect(error instanceof JsonWebTokenError).to.be.ok;
-                    done();
+                    expect(error).toBeInstanceOf(JsonWebTokenError);
                 });
         });
 
@@ -103,7 +96,7 @@ describe('Recaptcha JWT', () => {
                     .then(() => {
                         done();
                     });
-            }, 1000);
+            }, 50);
         });
 
         it('Must not validate expirated tokens', done => {
@@ -114,10 +107,10 @@ describe('Recaptcha JWT', () => {
             setTimeout(() => {
                 r.validateJwt(jwt)
                     .catch(error => {
-                        expect(error instanceof TokenExpiredError).to.be.ok;
+                        expect(error).toBeInstanceOf(TokenExpiredError);
                         done();
                     });
-            }, 1200);
+            }, 1100);
         });
 
         it('Must get JWT content', done => {
@@ -126,7 +119,7 @@ describe('Recaptcha JWT', () => {
 
             r.validateJwt(jwt)
                 .then(result => {
-                    expect(result == 'some_captcha');
+                    expect(result.content).toEqual('some_captcha');
                     done();
                 });
         });
@@ -148,7 +141,7 @@ describe('Recaptcha JWT', () => {
 
             r.validateJwtAndContent('some_invalid_jwt', 'some_value')
                 .catch(error => {
-                    expect(error instanceof JsonWebTokenError).to.be.ok;
+                    expect(error).toBeInstanceOf(JsonWebTokenError);
                     done();
                 });
         });
@@ -172,7 +165,7 @@ describe('Recaptcha JWT', () => {
                     .then(() => {
                         done();
                     });
-            }, 1000);
+            }, 50);
         });
 
         it('Must not validate expirated tokens', done => {
@@ -183,10 +176,10 @@ describe('Recaptcha JWT', () => {
             setTimeout(() => {
                 r.validateJwtAndContent(jwt, 'some_value')
                     .catch(error => {
-                        expect(error instanceof TokenExpiredError).to.be.ok;
+                        expect(error).toBeInstanceOf(TokenExpiredError);
                         done();
                     });
-            }, 1200);
+            }, 1100);
         });
 
         it('Must not validate with invalid content', done => {
@@ -195,7 +188,7 @@ describe('Recaptcha JWT', () => {
 
             r.validateJwtAndContent(jwt, 'some_invalid_value')
                 .catch(error => {
-                    expect(error instanceof InvalidContentError).to.be.ok;
+                    expect(error).toBeInstanceOf(InvalidContentError);
                     done();
                 });
         })
